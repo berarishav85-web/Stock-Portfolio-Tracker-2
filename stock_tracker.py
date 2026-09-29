@@ -1,46 +1,27 @@
-# Task 2: Stock Portfolio Tracker
+import streamlit as st
 
-# Hardcoded stock prices
-stock_prices = {
-    "AAPL": 180,
-    "TSLA": 250,
-    "GOOGL": 140,
-    "MSFT": 420,
-    "AMZN": 180
-}
+st.set_page_config(
+    page_title="Stock Portfolio Tracker",
+    page_icon="📈"
+)
 
-print("===== STOCK PORTFOLIO TRACKER =====")
+st.title("📈 Stock Portfolio Tracker")
+st.write("Calculate the total value of your stock portfolio.")
 
-total_investment = 0
+st.header("Enter your stocks")
 
-while True:
-    stock = input("Enter stock name (or 'done' to finish): ").upper()
+stock1 = st.text_input("Stock 1 name", "Apple")
+shares1 = st.number_input("Number of shares", min_value=0.0, value=0.0)
+price1 = st.number_input("Price per share", min_value=0.0, value=0.0)
 
-    if stock == "DONE":
-        break
+stock2 = st.text_input("Stock 2 name", "Microsoft")
+shares2 = st.number_input("Number of shares", min_value=0.0, value=0.0)
+price2 = st.number_input("Price per share", min_value=0.0, value=0.0)
 
-    if stock not in stock_prices:
-        print("Stock not available.")
-        print("Available stocks:", ", ".join(stock_prices.keys()))
-        continue
+if st.button("Calculate Portfolio Value"):
+    value1 = shares1 * price1
+    value2 = shares2 * price2
 
-    quantity = int(input("Enter quantity: "))
+    total = value1 + value2
 
-    price = stock_prices[stock]
-    investment = price * quantity
-
-    print("Stock price:", price)
-    print("Investment:", investment)
-
-    total_investment += investment
-
-print("\n===== PORTFOLIO SUMMARY =====")
-print("Total Investment = $", total_investment)
-
-# Save result to a text file
-with open("portfolio_result.txt", "w") as file:
-    file.write("STOCK PORTFOLIO SUMMARY\n")
-    file.write("-----------------------\n")
-    file.write(f"Total Investment = ${total_investment}\n")
-
-print("Result saved to portfolio_result.txt")
+    st.success(f"Total Portfolio Value: ₹{total:,.2f}")
